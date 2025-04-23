@@ -1,0 +1,332 @@
+{
+  "Product_of_Array_Except_Self": {
+    "done": true,
+    "tags": "array, Prefix multiplication",
+    "comments": "",
+    "solution": "\nclass Solution {\npublic:\n    vector<int> productExceptSelf(vector<int>& nums) {\n        \n          int res = 1;\n            int zeroCount = 0;\n           int n = nums.size();\n           \n        for ( int x : nums)\n        {\n            if(x == 0)\n            {\n                zeroCount++;\n            }\n             res *= (x == 0 ? 1 : x);\n             cout<<res<<\" \";\n        }\n           \n   \n        for (  int i = 0; i < n ; i++)\n        {\n            if(zeroCount != n  )\n            {\n            if(zeroCount > 0 )\n            {\n                if(zeroCount == 1)\n                {\n                    \n                    nums[i] = nums[i] == 0 ? res : 0;\n                }else\n                {\n                    nums[i] = 0;\n                }\n            }else\n            {\n                 nums[i] = res/nums[i];\n            }\n        }else{\n            nums[i] = 0;\n        }\n        }\n               \n            \n        return nums;\n    }\n};",
+    "revisit": false
+  },
+  "Set_Matrix_Zeroes": {
+    "done": true,
+    "tags": "array, Matrix manipulation (in-place)",
+    "comments": "// we can copy vectors by value with = means deep copy\n\n",
+    "solution": "class Solution {\npublic:\n    void setZeroes(vector<vector<int>>& m) {\n         int r = m.size();\n        int c = m[0].size();\n        vector<vector<int>> temp = m;\n        for(int i = 0 ; i <r; i++)\n        {\n            for(int j =0 ; j < c; j++)\n            {\n                if(temp[i][j]==0)\n                setToZero(m,i,j);\n            }\n        }\n        \n    }\n    void setToZero(vector<vector<int>> &arr, int i, int j)\n    { \n        \n        int r = arr.size();\n        int c = arr[0].size();\n        for(int k = 0 ; k < r ; k++)\n        {\n            arr[k][j] =0;\n        }\n        for(int k = 0 ; k < c ; k++)\n        {\n            arr[i][k] =0;\n        }\n    }\n\n\n};",
+    "revisit": false
+  },
+  "Spiral_Matrix": {
+    "comments": "//recursion question \nafter one circle its the same problem",
+    "done": false,
+    "solution": "",
+    "tags": "array, Matrix traversal simulation",
+    "revisit": true
+  },
+  "Longest_Palindromic_Substring": {
+    "comments": "//can be solved with mancher algo",
+    "tags": "strings, Expand around center",
+    "done": false,
+    "revisit": true
+  },
+  "Group_Anagrams": {
+    "tags": "Hash Map, Categorize by sorted string",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Longest_Consecutive_Sequence": {
+    "tags": "HashSet, Sequence ordering",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Rotate_Image": {
+    "tags": "array, Matrix rotation",
+    "done": false,
+    "comments": "4. Rotate 90 Degrees Clockwise\nTranspose → then flip horizontally.\n\nKnown as Rotate Right.\n\n5. Rotate 90 Degrees Counterclockwise\nTranspose → then flip vertically.\n\nKnown as Rotate Left.\n\n6. Rotate 180 Degrees\nFlip both vertically and horizontally.\n\nOR flip upside down and then left to right.",
+    "solution": "",
+    "revisit": true
+  },
+  "Container_With_Most_Water": {
+    "tags": "array, Two pointers",
+    "done": false,
+    "comments": "//simple greedy also\nALWAYS MOVE SMALL VALUE POINTER",
+    "solution": "class Solution {\npublic:\n    int maxArea(vector<int>& h) {\n\n        int current = 0;\n        int max = 0;\n        int n = h.size();\n        for (int i = 0, j = n - 1; i < j;) {\n            current = h[i] > h[j] ? h[j] * (j - i) : h[i] * (j - i);\n            max = max < current ? current : max;\n            if (h[i] > h[j])\n                j--;\n            else\n                i++;\n        }\n        return max;\n    }\n};"
+  },
+  "House_Robber": {
+    "tags": "Dynamic Programming, Maximum sum",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "House_Robber_II": {
+    "tags": "Dynamic Programming, Circular array",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Decode_Ways": {
+    "tags": "Dynamic Programming, String decoding",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Graph_Valid_Tree": {
+    "tags": "Graph, Union-Find",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Redundant_Connection": {
+    "tags": "Graph, Union-Find",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "N_Queens": {
+    "tags": "Backtracking, Recursion",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Sudoku_Solver": {
+    "tags": "Backtracking, Constraint satisfaction",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Flatten_Binary_Tree_to_Linked_List": {
+    "tags": "Binary Tree, Preorder traversal",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Kth_Smallest_Element_in_a_BST": {
+    "tags": "Binary Search Tree, Inorder traversal",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Two_Sum": {
+    "tags": "Hash Map, Pair sum",
+    "done": false,
+    "comments": "",
+    "solution": "",
+    "revisit": false
+  },
+  "Valid_Anagram": {
+    "tags": "Hash Map, String sorting",
+    "done": false,
+    "comments": "",
+    "solution": "",
+    "revisit": false
+  },
+  "4Sum_II": {
+    "tags": "Hash Map, Two-sum pairs for 4-sum",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Longest_Substring_Without_Repeating_Characters": {
+    "tags": "Sliding window, Two pointers + set/map",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Minimum_Window_Substring": {
+    "tags": "Sliding window, Two pointers + frequency count",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Find_All_Anagrams_in_a_String": {
+    "tags": "Sliding window, Anagram frequency match",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Sliding_Window_Maximum": {
+    "tags": "Deque, Monotonic queue for window max",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "3Sum": {
+    "tags": "Two pointers, After sorting",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Trapping_Rain_Water": {
+    "tags": "Two pointers, Water trapping calculation",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Sort_Colors": {
+    "tags": "Two pointers, Dutch national flag sort",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Subarray_Sum_Equals_K": {
+    "tags": "Prefix sum, Hash Map",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Contiguous_Array": {
+    "tags": "Prefix sum, Hash (equal 0/1 counts)",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Minimum_Size_Subarray_Sum": {
+    "tags": "Two pointers, Sliding window sum",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Daily_Temperatures": {
+    "tags": "Monotonic stack, Next warmer day",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Next_Greater_Element_II": {
+    "tags": "Monotonic stack, Circular array",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Asteroid_Collision": {
+    "tags": "Stack simulation, Collision",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Largest_Rectangle_in_Histogram": {
+    "tags": "Monotonic stack, Max rectangle in histogram",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Add_Two_Numbers": {
+    "tags": "Linked list, Simulate addition",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Remove_Nth_Node_From_End_of_List": {
+    "tags": "Linked list, Two-pointer removal",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Merge_K_Sorted_Lists": {
+    "tags": "Linked list + Heap, Merge lists",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "LRU_Cache": {
+    "tags": "Design, Doubly-linked list + HashMap",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Koko_Eating_Bananas": {
+    "tags": "Binary search on answer, Min eating speed",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Capacity_To_Ship_Packages_Within_D_Days": {
+    "tags": "Binary search on answer, Min ship capacity",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Split_Array_Largest_Sum": {
+    "tags": "Binary search on answer, Minimize largest subarray sum",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Find_the_Duplicate_Number": {
+    "tags": "Binary search on range, Cycle detection",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Jump_Game": {
+    "tags": "Greedy, Track farthest reachable index",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Gas_Station": {
+    "tags": "Greedy, Circular tour problem",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Merge_Intervals": {
+    "tags": "Intervals, Sort then merge overlapping",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Non_overlapping_Intervals": {
+    "tags": "Greedy, Interval scheduling (remove overlaps)",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Kth_Largest_Element_in_an_Array": {
+    "tags": "Heap / Quickselect, Find k-th largest",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Top_K_Frequent_Elements": {
+    "tags": "Heap or Bucket sort, Top K frequency",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Find_Median_from_Data_Stream": {
+    "tags": "Two Heaps, Maintain median",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Meeting_Rooms_II": {
+    "tags": "Min-heap, Min number of rooms needed",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Implement_Trie": {
+    "tags": "Trie, Prefix tree implementation",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Add_and_Search_Word": {
+    "tags": "Trie / DFS, Word dictionary with wildcard",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Word_Search_II": {
+    "tags": "Trie + Backtracking, Find all words in board",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  },
+  "Replace_Words": {
+    "tags": "Trie, Replace prefixes in sentence",
+    "done": false,
+    "comments": "",
+    "solution": ""
+  }
+}

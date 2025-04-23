@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LeetCode Problem Tracker</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+</head>
+<body>
+  <div class="title-bar">
+    <span>LeetCode Problem Tracker</span>
+    <div class="window-controls">
+      <button id="window-minimize-btn" class="window-button" draggable="false">─</button>
+      <button id="window-maximize-btn" class="window-button" draggable="false">□</button>
+      <button id="window-close-btn" class="window-button" draggable="false">×</button>
+    </div>
+  </div>
+  <h1>LeetCode Problem Tracker</h1>
+  <div id="topbar">
+    <input type="text" id="new-question-title" placeholder="Question Title" />
+    <input type="text" id="new-question-link" placeholder="Question Link" />
+    <input type="text" id="new-question-category" placeholder="Category" />
+    <button id="add-question-button">Add Question</button>
+  </div>
+  <style>
+    #topbar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    #topbar input {
+      padding: 5px;
+      border: 1px solid #333;
+      background-color: #252526;
+      color: #d4d4d4;
+    }
+    #topbar button {
+      padding: 5px 10px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    #topbar button:hover {
+      background-color: #45a049;
+    }
+  </style>
+  <input class="search-box" type="text" id="search" placeholder="Search problems..." />
+  <div id="problem-list"></div>
+  <div class="window">
+    <h2>Application Window</h2>
+    <button class="close-button">Close</button>
+    <p>Content inside the application window styled to match VS Code theme.</p>
+  </div>
+  <script src="renderer.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cpp.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+
+{
+  "name": "leetcode-tracker",
+  "version": "1.0.0",
+  "description": "LeetCode Problem Tracker Electron App",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "electron": "^25.2.0"
+  }
+}
