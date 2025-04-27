@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes Manager</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../node_modules/easymde/dist/easymde.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .title-bar {
+            height: 40px;
+            background: #252526;
+            border-bottom: 1px solid #3c3c3c;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            -webkit-app-region: drag;
+            flex-shrink: 0;
+        }
+        
+        .notes-container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .file-tree-container {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .file-tree-item {
+            padding: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+            user-select: none;
+        }
+        
+        .file-tree-item:hover {
+            background: #2d2d2d;
+        }
+        
+        .file-tree-item.selected {
+            background: #37373d;
+        }
+        
+        .file-tree-item.drag-over {
+            background: #264f78;
+            outline: 1px solid #0e639c;
+        }
+        
+        .file-tree-item.dragging {
+            opacity: 0.5;
+        }
+        
+        .item-actions {
+            margin-left: auto;
+            display: none;
+            padding-right: 8px;
+            gap: 4px;
+        }
+        
+        .file-tree-item:hover .item-actions {
+            display: flex;
+        }
+        
+        .add-note-btn,
+        .add-folder-btn {
+            width: 16px;
+            height: 16px;
+            min-width: unset;
+            padding: 0;
+            font-size: 14px;
+            line-height: 1;
+            border-radius: 3px;
+            background: transparent;
+            color: #cccccc;
+            border: 1px solid #cccccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            opacity: 0.7;
+            transition: opacity 0.2s, background-color 0.2s;
+        }
+        
+        .add-note-btn:hover,
+        .add-folder-btn:hover {
+            opacity: 1;
+            background: #37373d;
+        }
+        
+        .expand-icon {
+            width: 16px;
+            text-align: center;
+            color: #cccccc;
+            font-size: 10px;
+            margin-right: 4px;
+        }
+        
+        .icon {
+            margin-right: 5px;
+            width: 16px;
+            height: 16px;
+        }
+        
+        .name {
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .folder {
+            margin-left: 15px;
+            transition: all 0.2s ease;
+        }
+        
+        .file-tree {
+            width: 250px;
+            background: #252526;
+            overflow-y: auto;
+            border-right: 1px solid #3c3c3c;
+            padding: 10px;
+            flex-shrink: 0;
+            font-size: 13px;
+        }
+        
+        .editor-container {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-width: 0;
+            background: #1e1e1e;
+        }
+        
+        .editor-wrapper {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            background: #1e1e1e;
+        }
+
+        .EasyMDEContainer {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            background: #1e1e1e;
+        }
+
+        .CodeMirror {
+            flex: 1;
+            height: auto !important;
+            background: #1e1e1e !important;
+            color: #d4d4d4 !important;
+        }
+
+        .CodeMirror-cursor {
+            border-left: 2px solid #d4d4d4 !important;
+        }
+
+        .CodeMirror-selected {
+            background: #264f78 !important;
+        }
+
+        .CodeMirror-scroll {
+            min-height: 100%;
+            max-height: none;
+        }
+
+        .editor-toolbar {
+            border-color: #3c3c3c !important;
+            background: #252526 !important;
+        }
+
+        .editor-toolbar button {
+            color: #d4d4d4 !important;
+        }
+
+        .editor-toolbar button:hover {
+            background: #2d2d2d !important;
+            border-color: #3c3c3c !important;
+        }
+
+        .editor-toolbar.disabled-for-preview button:not(.no-disable) {
+            opacity: 0.3 !important;
+        }
+
+        .editor-preview {
+            background: #1e1e1e !important;
+            color: #d4d4d4 !important;
+        }
+
+        .editor-preview-side {
+            background: #1e1e1e !important;
+            color: #d4d4d4 !important;
+        }
+
+        .editor-preview pre,
+        .editor-preview-side pre {
+            background: #252526 !important;
+            border: 1px solid #3c3c3c !important;
+            border-radius: 3px;
+            padding: 10px !important;
+        }
+
+        .editor-preview code,
+        .editor-preview-side code {
+            color: #ce9178 !important;
+            background: #252526 !important;
+            padding: 2px 4px !important;
+            border-radius: 3px;
+        }
+
+        /* Syntax highlighting colors for code blocks */
+        .editor-preview .hljs,
+        .editor-preview-side .hljs {
+            background: #252526 !important;
+            color: #d4d4d4 !important;
+        }
+
+        .editor-preview .hljs-keyword,
+        .editor-preview-side .hljs-keyword {
+            color: #569cd6 !important;
+        }
+
+        .editor-preview .hljs-string,
+        .editor-preview-side .hljs-string {
+            color: #ce9178 !important;
+        }
+
+        .editor-preview .hljs-comment,
+        .editor-preview-side .hljs-comment {
+            color: #6a9955 !important;
+        }
+
+        .editor-preview .hljs-number,
+        .editor-preview-side .hljs-number {
+            color: #b5cea8 !important;
+        }
+
+        .editor-preview .hljs-function,
+        .editor-preview-side .hljs-function {
+            color: #dcdcaa !important;
+        }
+
+        .editor-preview .hljs-type,
+        .editor-preview-side .hljs-type {
+            color: #4ec9b0 !important;
+        }
+
+        /* Custom scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1e1e1e;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #424242;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4f4f4f;
+        }
+    </style>
+</head>
+<body>
+    <div class="title-bar">
+        <span>Notes Manager</span>
+    </div>
+    <div class="notes-container">
+        <div class="file-tree" id="fileTree">
+            <!-- File tree will be populated dynamically -->
+        </div>
+        <div class="editor-container">
+            <div class="editor-wrapper">
+                <textarea id="editor"></textarea>
+            </div>
+        </div>
+    </div>
+    <script src="../node_modules/easymde/dist/easymde.min.js"></script>
+    <script src="notes.js"></script>
+</body>
+</html>

@@ -54,6 +54,11 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('window-close-btn').addEventListener('click', () => {
     ipcRenderer.send('window-control', 'close');
   });
+
+  // Add event listener for Manage Notes button
+  document.getElementById('manage-notes-button').addEventListener('click', () => {
+    ipcRenderer.send('open-notes-window');
+  });
 });
 
 function renderQuestions(questions) {
