@@ -28,15 +28,15 @@
   },
   "Group_Anagrams": {
     "tags": "Hash Map, Categorize by sorted string",
-    "done": false,
-    "comments": "",
-    "solution": ""
+    "done": true,
+    "comments": "//sort takes iterators and is call by reference",
+    "solution": "#include<bits/stdc++.h>\nclass Solution {\npublic:\n    vector<vector<string>> groupAnagrams(vector<string>& strs) {\n        \n        unordered_map<string,vector<string>> hm;\n        vector<vector<string>> res;\n        for(auto x : strs)\n        {\n            \n            string key = x;\n            sort(key.begin(), key.end());\n            if((hm.count(key)) != 0 ) \n            {\n                hm[key].push_back(x);\n            }else{\n                 vector<string> temp;\n                 temp.push_back(x);\n                 hm[key] = temp;\n            }\n        }\n\n        for(auto x : hm)\n        {\n            res.push_back(x.second);\n        }\n        return res;\n    }\n};"
   },
   "Longest_Consecutive_Sequence": {
     "tags": "HashSet, Sequence ordering",
-    "done": false,
+    "done": true,
     "comments": "",
-    "solution": ""
+    "solution": "class Solution {\npublic:\n    int longestConsecutive(vector<int>& nums) {\n        \n        int maxi = 1;\n        int curr = 1;\n        int n = nums.size();\n        if(n ==0 )\n        return 0;\n        sort(nums.begin(),nums.end());\n        for(int i = 0 ; i < n ; i++ )\n        {\n            curr = 1;\n           \n            while((i + 1 < n) && ((nums[i] == nums[i+1]) || (nums[i]+1 == nums[i+1])))\n            {\n               if(nums[i]+1 == nums[i+1])\n                curr += 1;\n                i++;\n            }\n          \n            maxi = max(maxi,curr);\n        }\n        return maxi;\n    }\n};"
   },
   "Rotate_Image": {
     "tags": "array, Matrix rotation",
@@ -47,7 +47,7 @@
   },
   "Container_With_Most_Water": {
     "tags": "array, Two pointers",
-    "done": false,
+    "done": true,
     "comments": "//simple greedy also\nALWAYS MOVE SMALL VALUE POINTER",
     "solution": "class Solution {\npublic:\n    int maxArea(vector<int>& h) {\n\n        int current = 0;\n        int max = 0;\n        int n = h.size();\n        for (int i = 0, j = n - 1; i < j;) {\n            current = h[i] > h[j] ? h[j] * (j - i) : h[i] * (j - i);\n            max = max < current ? current : max;\n            if (h[i] > h[j])\n                j--;\n            else\n                i++;\n        }\n        return max;\n    }\n};"
   },
@@ -121,27 +121,28 @@
   },
   "4Sum_II": {
     "tags": "Hash Map, Two-sum pairs for 4-sum",
-    "done": false,
-    "comments": "",
-    "solution": ""
+    "done": true,
+    "comments": "//same as 2 sum or 3 sum",
+    "solution": "class Solution {\npublic:\n    int fourSumCount(vector<int>& nums1, vector<int>& nums2, vector<int>& nums3, vector<int>& nums4) {\n        vector<int> s1;\n        unordered_map<int,int> s2;\n        int n =  nums2.size();\n        \n\n        for(int i = 0 ; i < n; i++ )\n        {\n            for(int j = 0; j < n ; j++ )\n            {\n                s1.push_back(nums1[i] + nums2[j]);\n\n                if(s2.count(nums3[i] + nums4[j]) == 0)\n                {\n                    s2[nums3[i] + nums4[j]] = 1;\n                }else\n                {\n                    s2[nums3[i] + nums4[j]] += 1;\n                }\n            }\n        }\n        int m = s1.size();\n        int z = 0;\n        for(int i = 0 ; i < m; i++ )\n        {\n            int key = -s1[i];\n            if(s2.count(key)>0)\n            {\n                z  +=  s2[key];\n            }\n        }\n        return z;\n    }\n};"
   },
   "Longest_Substring_Without_Repeating_Characters": {
     "tags": "Sliding window, Two pointers + set/map",
-    "done": false,
-    "comments": "",
-    "solution": ""
+    "done": true,
+    "comments": "//easy question\njust remove from set when shrinking window",
+    "solution": "class Solution {\npublic:\n    int lengthOfLongestSubstring(string arr) {\n        unordered_set<char> s;\n        int n = arr.size();\n        int curr = 0;\n        int maxi = 0;\n\n        for(int i = 0, j =0; j < n ; j++)\n        {\n            if(s.count(arr[j]) > 0)\n            {\n                while(arr[i] != arr[j])\n                {\n                    s.erase(arr[i]);\n                    i++;\n                    curr--;\n                }\n                 s.insert(arr[j]);\n                i++;\n            }else\n            {\n                s.insert(arr[j]);\n               \n                curr++;\n            }\n           \n            maxi = max(maxi,curr);\n\n        }\n        return maxi;\n    }\n};"
   },
   "Minimum_Window_Substring": {
     "tags": "Sliding window, Two pointers + frequency count",
-    "done": false,
-    "comments": "",
-    "solution": ""
+    "done": true,
+    "comments": "//Very tricky\nHARD PROBLEM REVIST ",
+    "solution": "class Solution {\npublic:\n    string minWindow(string s, string t) {\n\n        int n = s.size();\n        int m = t.size();\n        unordered_map<char, int> f;\n        unordered_map<char, int> o;\n        unordered_set<char> u;\n        string sol = \"\";\n        int l = -1, r = -1;\n        int mini = INT_MAX;\n\n        if (n < t.size())\n            return sol;\n\n        if (n == 1) {\n            if (s[0] == t[0])\n                return s;\n            return sol;\n        }\n        for (auto x : t) {\n            if (o.count(x) > 0) {\n                o[x] += 1;\n            } else {\n                o[x] = 1;\n                f[x] = 0;\n                u.insert(x);\n            }\n        }\n\n        int required = o.size();\n        int formed = 0;\n\n        int j = 0;\n        for (int i = 0; i <= n - m; i++) {\n            bool solFound = false;\n            while ((! (solFound = (formed == required))) && j < n) {\n                if (u.count(s[j]) > 0) {\n                    f[s[j]] += 1;\n                    if (f[s[j]] == o[s[j]]) {\n                        formed += 1;\n                    }\n                }\n                j++;\n            }\n\n            while (formed == required && i < j) {\n                if (u.count(s[i]) > 0) {\n                    break;\n                }\n                i++;\n            }\n\n            if (solFound) {\n                if ((mini > (j - i + 1))) {\n                    l = i;\n                    r = j;\n                    mini = j - i + 1;\n                }\n\n                if (u.count(s[i]) > 0) {\n                    if (f[s[i]] == o[s[i]]) {\n                        formed -= 1;\n                    }\n                    f[s[i]] -= 1;\n                }\n            } else {\n                if (l != -1)\n                    sol = getss(s, l, r);\n                return sol;\n            }\n        }\n        if (l != -1)\n            sol = getss(s, l, r);\n        return sol;\n    }\n\n    string getss(string s, int i, int j) {\n        string r = \"\";\n        for (; i < j; i++) {\n            r += s[i];\n        }\n        return r;\n    }\n};",
+    "revisit": true
   },
   "Find_All_Anagrams_in_a_String": {
     "tags": "Sliding window, Anagram frequency match",
-    "done": false,
-    "comments": "",
-    "solution": ""
+    "done": true,
+    "comments": "use fill insted of memset\nmemset(ss,0,sizeof(ss));",
+    "solution": "class Solution {\npublic:\n    vector<int> findAnagrams(string s, string p) {\n        \n         vector<int> ret;\n        int n = s.size();\n        int m = p.size();\n\n        if(m>n)\n        return ret;\n\n        if(m==n)\n        {\n            sort(s.begin(),s.end()); \n             sort(p.begin(),p.end());\n            if(s==p)\n                {\n                    ret.push_back(0);\n                    return ret;\n                }\n                else\n                {\n                    return ret;\n                }\n        }\n            \n        int ss[256];\n        fill(begin(ss), end(ss), 0); \n        int ps[256];\n        fill(begin(ps), end(ps), 0); \n        unordered_set<char> pset;\n\n         \n       \n\n        for(auto x : p)\n        {\n            pset.insert(x);\n            ps[x] += 1;\n          \n        }\n        \n        for(int i = 0 ; i < m-1 ;i++)\n        {\n              ss[s[i]] +=1;\n        }\n\n        for(int i = 0, j= m-1 ; i < n-m +1; i++,j++ )\n        {\n            ss[s[j]] += 1;\n            if(check(pset,ss,ps))\n            {\n                ret.push_back(i);\n            }\n            ss[s[i]] -= 1;\n\n        }\n         return ret;\n    }\n\n    bool check(unordered_set<char>& pset,int* ss, int* ps )\n    {\n        for( auto x : pset)\n        {\n            if(ss[x] != ps[x])\n                return false; \n        }\n        return true;\n\n    }\n\n\n};"
   },
   "Sliding_Window_Maximum": {
     "tags": "Deque, Monotonic queue for window max",
