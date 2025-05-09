@@ -146,33 +146,35 @@
   },
   "Sliding_Window_Maximum": {
     "tags": "Deque, Monotonic queue for window max",
-    "done": false,
-    "comments": "",
-    "solution": ""
+    "done": true,
+    "comments": "//Good for practicing loop ranges",
+    "solution": "class Solution {\npublic:\n    vector<int> maxSlidingWindow(vector<int>& nums, int k) {\n\n        int n = nums.size();\n        int currMax = 0;\n        vector<int> res;\n        map<int,int> m;\n         if(1 == n)\n         {\n            res.push_back(nums[0]);\n         return res;\n         }\n\n        for(int i = 0 ; i< k ; i++)\n        {\n            if(!m.count(nums[i]))\n            {\n                m[nums[i]] = 1;\n            }else\n            {\n                m[nums[i]] += 1;\n            }\n\n        }\n\n        for(int i = 0,j = k  ; i < n - k + 1 ; i++,j++)\n        {\n            \n           res.push_back(m.rbegin()->first);\n        \n            if(m[nums[i]] == 1)\n            {\n                m.erase(nums[i]);\n            }else\n            {\n                m[nums[i]] -= 1;\n            }\n\n            if(j < n)\n            if(!m.count(nums[j]))\n            {\n                m[nums[j]] = 1;\n            }else\n            {\n                m[nums[j]] += 1;\n            }\n\n\n\n        }\n        return res;\n\n    }\n};",
+    "revisit": true
   },
   "3Sum": {
     "tags": "Two pointers, After sorting",
-    "done": false,
+    "done": true,
     "comments": "",
-    "solution": ""
+    "solution": "// same as 4 sum "
   },
   "Trapping_Rain_Water": {
     "tags": "Two pointers, Water trapping calculation",
-    "done": false,
+    "done": true,
     "comments": "",
-    "solution": ""
+    "solution": "class Solution {\npublic:\n    int trap(vector<int>& height) {\n        \n        int l = height[0];\n        int r = height[height.size()-1];\n        int lp =0;\n        int rp = height.size()-1;\n        int tappedWater = 0;\n        while(rp>lp)\n        {\n            int hl = height[lp];\n            int hr = height[rp];\n            if(hl<hr)\n            {\n                tappedWater += l-hl;\n                lp++;\n                l = max(l,height[lp]);\n            }\n            else\n            {\n                 tappedWater += r-hr;\n                 rp--;\n                 r =  max(r,height[rp]);\n            }\n\n        }\n        return tappedWater;\n    }\n};"
   },
   "Sort_Colors": {
     "tags": "Two pointers, Dutch national flag sort",
-    "done": false,
-    "comments": "",
-    "solution": ""
+    "done": true,
+    "comments": "//3 pointer inplace sort",
+    "solution": "class Solution {\npublic:\n    void sortColors(vector<int>& arr) {\n        int n = arr.size();\n        int low = 0, mid = 0, high = n - 1;\n\n        while (mid <= high) {\n            if (arr[mid] == 0) {\n                swap(arr[low], arr[mid]);\n                low++;\n                mid++;\n            }\n            else if (arr[mid] == 1) {\n                mid++;\n            }\n            else { // arr[mid] == 2\n                swap(arr[mid], arr[high]);\n                high--;\n            }\n        }\n    }\n};"
   },
   "Subarray_Sum_Equals_K": {
     "tags": "Prefix sum, Hash Map",
     "done": false,
     "comments": "",
-    "solution": ""
+    "solution": "----\nTODO\n----",
+    "revisit": true
   },
   "Contiguous_Array": {
     "tags": "Prefix sum, Hash (equal 0/1 counts)",
@@ -329,5 +331,10 @@
     "done": false,
     "comments": "",
     "solution": ""
+  },
+  "Number_of_Islands": {
+    "solution": "class Solution {\npublic:\n    int numIslands(vector<vector<char>>& grid) {\n        \n        unordered_map<string,bool> visisted;\n        stack<pair<int,int>> ones;\n        int res = 0;\n        int rows = grid.size();\n        int columns = grid[0].size();\n        for(int i = 0 ; i<rows ; i++)\n         for(int j = 0 ; j< columns ; j++)\n         {\n           string key = to_string(i) + \"-\" + to_string(j);\n            visisted[key] = false;\n            if(grid[i][j]=='1')\n            {\n                ones.push({i,j});\n            }\n         }\n\n         while(!ones.empty())\n         {\n            \n            stack<pair<int,int>> temp;\n            auto s = ones.top();\n            ones.pop();\n            string key = to_string(s.first) + \"-\" + to_string(s.second);\n\n            if(!visisted[key])\n            {\n                temp.push({s.first,s.second});\n                while(!temp.empty())\n                {\n                    auto k = temp.top();\n                    temp.pop();\n                   string key = to_string(k.first) + \"-\" + to_string(k.second);\n                   if(!visisted[key])\n                   {\n                    visisted[key] = true;\n                    \n                    //get all 4 valid negihbor\n                    if(k.first < rows - 1)\n                    {\n                        int p = k.first+1;\n                        int q = k.second;\n                        if(grid[p][q]=='1')\n                        {\n                             string key = to_string(p) + \"-\" + to_string(q);\n                             if(!visisted[key])\n                             {\n                                temp.push({p,q});\n                             }\n                        }\n                       \n\n                    }\n                    if(k.first >= 1 )\n                    {\n                        int p = k.first-1;\n                        int q = k.second;\n                         if(grid[p][q]=='1')\n                        {\n                             string key = to_string(p) + \"-\" + to_string(q);\n                             if(!visisted[key])\n                             {\n                                temp.push({p,q});\n                             }\n                        }\n                    }\n                     if(k.second < columns - 1)\n                    {\n                        int p = k.first;\n                        int q = k.second+1;\n                         if(grid[p][q]=='1')\n                        {\n                             string key = to_string(p) + \"-\" + to_string(q);\n                             if(!visisted[key])\n                             {\n                                temp.push({p,q});\n                             }\n                        }\n                    }\n                    if(k.second >= 1 )\n                    {\n                        int p = k.first;\n                        int q = k.second-1;\n                         if(grid[p][q]=='1')\n                        {\n                             string key = to_string(p) + \"-\" + to_string(q);\n                             if(!visisted[key])\n                             {\n                                temp.push({p,q});\n                             }\n                        }\n                    }\n\n                    //push them to temp stack only if not visited and \"1\"\n\n\n                   }\n                  \n\n                }\n                res++;\n            }\n            \n         }\n    return res;\n    }\n};",
+    "comments": "//tricky but straight forward\nalso cant add no to string directly.\nstring key = to_string(s.first) + \"-\" + to_string(s.second);\n",
+    "done": true
   }
 }

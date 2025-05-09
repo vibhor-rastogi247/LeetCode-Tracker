@@ -308,5 +308,28 @@
       "title": "Replace Words",
       "link": "https://leetcode.com/problems/replace-words/"
     }
+  ],  "Graph Algorithms (Advanced)": [
+    {
+      "title": "Network Delay Time (Dijkstra)",
+      "link": "https://leetcode.com/problems/network-delay-time/"
+    },
+    {
+      "title": "Minimum Spanning Tree (Kruskal)",
+      "link": "https://leetcode.com/problems/min-cost-to-connect-all-points/"
+    },
+    {
+      "title": "Bellman-Ford (Negative Weight Cycle)",
+      "link": "https://leetcode.com/problems/cheapest-flights-within-k-stops/"
+    }
+  ],
+  "Bit Manipulation": [
+    {
+      "title": "Single Number",
+      "link": "https://leetcode.com/problems/single-number/"
+    },
+    {
+      "title": "Number of 1 Bits",
+      "link": "https://leetcode.com/problems/number-of-1-bits/"
+    }
   ]
 }

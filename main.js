@@ -86,9 +86,6 @@ function createNotesWindow() {
   require('@electron/remote/main').enable(notesWindow.webContents);
   notesWindow.loadFile('src/notes.html');
   
-  // Open DevTools for debugging in development
-  notesWindow.webContents.openDevTools();
-  
   notesWindow.webContents.on('did-fail-load', (event, errorCode, errorDescription) => {
     console.error('Window failed to load:', errorCode, errorDescription);
   });

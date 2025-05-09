@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             fs.mkdirSync(notesDir, { recursive: true });
         }
 
-        // Initialize the markdown editor with dark theme
+        // Initialize the markdown editor with dark theme and syntax highlighting
         editor = new EasyMDE({
             element: document.getElementById('editor'),
             autosave: {
@@ -35,7 +35,44 @@ document.addEventListener('DOMContentLoaded', async () => {
                 '|', 'link', 'image', 'code',
                 '|', 'preview', 'side-by-side', 'fullscreen'
             ],
-            theme: 'night'
+            previewRender: function(plainText, preview) {
+                // Asynchronously render the preview with syntax highlighting
+                setTimeout(function() {
+                    // First convert markdown to HTML
+                    const htmlContent = this.parent.markdown(plainText);
+                    preview.innerHTML = htmlContent;
+                    
+                    // Find all code blocks and apply syntax highlighting
+                    preview.querySelectorAll('pre code').forEach((block) => {
+                        // Try to detect language from class
+                        const languageMatch = block.className.match(/language-(\w+)/);
+                        if (languageMatch) {
+                            // Make sure we have the correct language class
+                            block.classList.add(`language-${languageMatch[1]}`);
+                            
+                            // Use Prism's own highlighting instead of manual replacement
+                            if (languageMatch[1] === 'cpp') {
+                                block.innerHTML = block.textContent; // Reset any previous highlighting
+                                Prism.highlightElement(block);
+                            }
+                        } else {
+                            block.classList.add('language-javascript');
+                            Prism.highlightElement(block);
+                        }
+                        
+                        // Apply line numbers
+                        block.parentElement.classList.add('line-numbers');
+                    });
+                    
+                    // Highlight inline code
+                    preview.querySelectorAll('code:not([class*="language-"])').forEach((block) => {
+                        block.classList.add('language-javascript');
+                        Prism.highlightElement(block);
+                    });
+                }.bind(this), 0);
+                
+                return "Loading...";
+            }
         });
         console.log('Editor initialized');
 
