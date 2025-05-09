@@ -38,34 +38,36 @@ document.addEventListener('DOMContentLoaded', async () => {
             previewRender: function(plainText, preview) {
                 // Asynchronously render the preview with syntax highlighting
                 setTimeout(function() {
-                    // First convert markdown to HTML
                     const htmlContent = this.parent.markdown(plainText);
                     preview.innerHTML = htmlContent;
                     
-                    // Find all code blocks and apply syntax highlighting
+                    // Process code blocks
                     preview.querySelectorAll('pre code').forEach((block) => {
+                        // Get the raw text content before any HTML encoding
+                        const rawContent = block.textContent;
+                        
                         // Try to detect language from class
                         const languageMatch = block.className.match(/language-(\w+)/);
                         if (languageMatch) {
-                            // Make sure we have the correct language class
                             block.classList.add(`language-${languageMatch[1]}`);
-                            
-                            // Use Prism's own highlighting instead of manual replacement
-                            if (languageMatch[1] === 'cpp') {
-                                block.innerHTML = block.textContent; // Reset any previous highlighting
-                                Prism.highlightElement(block);
-                            }
                         } else {
                             block.classList.add('language-javascript');
-                            Prism.highlightElement(block);
                         }
+                        
+                        // First, ensure we have the raw content with actual angle brackets
+                        block.textContent = rawContent;
                         
                         // Apply line numbers
                         block.parentElement.classList.add('line-numbers');
+                        
+                        // Let Prism handle the syntax highlighting
+                        Prism.highlightElement(block);
                     });
                     
-                    // Highlight inline code
-                    preview.querySelectorAll('code:not([class*="language-"])').forEach((block) => {
+                    // Process inline code blocks
+                    preview.querySelectorAll('code:not(pre code)').forEach((block) => {
+                        const rawContent = block.textContent;
+                        block.textContent = rawContent;
                         block.classList.add('language-javascript');
                         Prism.highlightElement(block);
                     });
