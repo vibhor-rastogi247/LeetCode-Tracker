@@ -171,22 +171,22 @@
   },
   "Subarray_Sum_Equals_K": {
     "tags": "Prefix sum, Hash Map",
-    "done": false,
-    "comments": "",
-    "solution": "----\nTODO\n----",
-    "revisit": true
+    "done": true,
+    "comments": "think of it as \nif array is A and SA prefix sum array\nthen SA[j] = SA[i]- k;\nA = [-1,2,-3,3,1,5,-1] , k = 2 \nSA= [-1,1,-2,1,2,7,0]\nso at i = 3 SA[j] = 1 -2 = -1\nfound at index 0 of SA",
+    "solution": "class Solution {\npublic:\n    int subarraySum(vector<int>& arr, int k) {\n        int n = arr.size();\n        int i = 0 , j = 0;\n        int sum = 0;\n        unordered_map<int,int> mp ;\n        int res = 0;\n\n        for(int i = 0 ; i < n; i++)\n        {\n            sum += arr[i];\n            if(sum == k)\n            {\n                res++;\n            }\n            int saj = sum - k; //sum array j \n        if(mp.count(saj)>0)\n        {\n            res += mp[saj];\n        }\n        mp[sum] +=1;\n        }\n        return res;\n\n    }\n};",
+    "revisit": false
   },
   "Contiguous_Array": {
     "tags": "Prefix sum, Hash (equal 0/1 counts)",
-    "done": false,
-    "comments": "",
-    "solution": ""
+    "done": true,
+    "comments": "for Problem \nContiguous Array\ni am thinking prefix sum \nbut considering 1 as 1 and 0 as -1 \nnow i will find the value that is repating and gives biggest gap\nsave first occurence in map ",
+    "solution": "class Solution {\npublic:\n    int findMaxLength(vector<int>& arr) {\n        \n        int n = arr.size();\n        unordered_map<int,int> mp;\n        mp[0] = -1; //solve edge case for if sum ever comes to zero\n\n        int sum = 0;\n        int res = 0;\n        for (int i = 0 ; i < n ; i++)\n        {\n            sum +=  arr[i] == 0 ? -1 : 1;\n            if(mp.count(sum) > 0 )\n            {\n               res =  max(res, (i - mp[sum]) );\n            }else\n            {\n                mp[sum] = i;\n            }\n\n        }\n        return res;\n    }\n};"
   },
   "Minimum_Size_Subarray_Sum": {
     "tags": "Two pointers, Sliding window sum",
-    "done": false,
-    "comments": "",
-    "solution": ""
+    "done": true,
+    "comments": "//read question better \nalso same as above just no map needed and like window problem",
+    "solution": "class Solution {\npublic:\n    int minSubArrayLen(int k, vector<int>& arr) {\n        \n        int n = arr.size();\n        int i = 0 , j = 0;\n        int sum = 0;\n        int res = INT_MAX;\n\n        for(int i = 0 ; i < n; i++)\n        {\n            sum += arr[i];\n            int target = sum - k;\n            if(sum >= k)\n            {\n                res = min(res, i-j + 1 );\n                while(sum >= k && j <= i)\n                {\n                    sum -= arr[j];\n                    j++;\n                    if(sum >= k)\n                    res = min(res, i-j + 1 );\n                }\n               \n            }\n        \n        }\n        return res == INT_MAX ? 0 : res;\n    }\n};"
   },
   "Daily_Temperatures": {
     "tags": "Monotonic stack, Next warmer day",
